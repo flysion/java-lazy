@@ -43,14 +43,13 @@ public class Foo {
     @Once
     public String bar() {
         System.out.println("hello");
-        return "123";
     }
 
     public static void main(String[] args) {
         Foo foo = new Foo();
-        String a = foo.bar(); // a= "123" and print "hello"
-        String b = foo.bar(); // b= "123" and not print
-        String c = foo.bar(); // c= "123" and not print
+        foo.bar(); // print "hello"
+        foo.bar(); // not print
+        foo.bar(); // not print
     }
 }
 ```
