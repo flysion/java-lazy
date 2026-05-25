@@ -3,7 +3,7 @@
 <dependency>
     <groupId>com.github.flysion</groupId>
     <artifactId>lazy</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.8-SNAPSHOT</version>
 </dependency>
 ```
 
