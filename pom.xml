@@ -27,6 +27,17 @@
         </repository>
     </repositories>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.sun</groupId>
+            <artifactId>tools</artifactId>
+            <version>1.8.0</version>
+            <scope>system</scope>
+            <!-- 请将此路径替换为你本地实际的JDK8安装路径 -->
+            <systemPath>D:/work/software/openjdk8u312-b07/lib/tools.jar</systemPath>
+        </dependency>
+    </dependencies>
+
     <!-- 项目发布仓库 -->
     <distributionManagement>
         <repository>
