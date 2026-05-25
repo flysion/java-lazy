@@ -172,6 +172,7 @@ public class CustomProcessor extends AbstractProcessor {
             final Type returnType = (Type) elementType.getReturnType();
             final TypeElement classElement = (TypeElement) element.getEnclosingElement();
             final JCTree.JCClassDecl tree = trees.getTree(classElement);
+            final Once onceAnnotation = element.getAnnotation(Once.class);
 
             // 新增导入
             // 不能将自己的import放在defs[0],因为那里是package
@@ -266,19 +267,29 @@ public class CustomProcessor extends AbstractProcessor {
 
                         // if
                         final JCTree.JCBlock ifBlock = treeMaker.Block(0, ifStatements.toList());
-                        final JCTree.JCBinary ifCond = treeMaker.Binary(
-                                JCTree.Tag.OR,
-                                treeMaker.Binary(
-                                        JCTree.Tag.EQ,
-                                        treeMaker.Ident(resultedPropertyName),
-                                        treeMaker.Literal(TypeTag.BOT, null)
-                                ),
-                                treeMaker.Binary(
-                                        JCTree.Tag.EQ,
-                                        treeMaker.Ident(resultedPropertyName),
-                                        treeMaker.Literal(Boolean.FALSE)
-                                )
-                        );
+
+                        JCTree.JCBinary ifCond;
+                        if (!onceAnnotation.allowNull()) {
+                            ifCond = treeMaker.Binary(
+                                    JCTree.Tag.OR,
+                                    treeMaker.Binary(
+                                            JCTree.Tag.EQ,
+                                            treeMaker.Ident(resultedPropertyName),
+                                            treeMaker.Literal(TypeTag.BOT, null)
+                                    ),
+                                    treeMaker.Binary(
+                                            JCTree.Tag.EQ,
+                                            treeMaker.Ident(resultedPropertyName),
+                                            treeMaker.Literal(Boolean.FALSE)
+                                    )
+                            );
+                        } else {
+                            ifCond = treeMaker.Binary(
+                                    JCTree.Tag.EQ,
+                                    treeMaker.Ident(resultedPropertyName),
+                                    treeMaker.Literal(Boolean.FALSE)
+                            );
+                        }
 
                         ListBuffer<JCTree.JCStatement> statements = new ListBuffer<>();
                         statements.add(treeMaker.If(ifCond, ifBlock, null));
