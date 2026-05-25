@@ -9,7 +9,7 @@
     <version>${revision}</version>
 
     <properties>
-        <revision>1.0.4-SNAPSHOT</revision>
+        <revision>1.0.5-SNAPSHOT</revision>
     </properties>
 
     <!-- 配置私有仓库 -->
